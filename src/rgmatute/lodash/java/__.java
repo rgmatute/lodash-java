@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 
 /**
  * Created By. Ronny Gabriel Matute Granizo  
+ * @GitHub https://github.com/rgmatute/lodash-java
  * @Based on Underscore-java
  * @OriginalLibrary http://javadev.github.io/underscore-java/
  * Email: rgmatute91@gmail.com
