@@ -1,5 +1,9 @@
 package rgmatute.lodash.java;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -874,6 +878,10 @@ public class __<T> {
     public List<T> invoke(final String methodName) {
         return invoke(iterable, methodName);
     }
+    
+    public static <T, K> List<K> pluck(List<T> elements, Function<T, K> pluckMethod) {
+        return Pluck.pluck(elements, pluckMethod);
+    }
 
     public static <E> List<Object> pluck(final List<E> list, final String propertyName) {
         if (list.isEmpty()) {
@@ -1546,7 +1554,23 @@ public class __<T> {
         }
         return newArrayList(union);
     }
-
+    
+    public static <E> List<E> merge(final List<E> list, final List<E>... lists) {
+        return union(list, lists);
+    }
+    
+    public static List<String> fileRead(String path) {
+            return FileReader.fileRead(path);
+    }
+    
+    public static void print(Object object){
+        System.out.print(object);
+    }
+    
+    public static void println(Object object){
+        System.out.println(object);
+    }
+    
     @SuppressWarnings("unchecked")
     public List<T> unionWith(final List<T>... lists) {
         return union(newArrayList(iterable), lists);
@@ -3426,4 +3450,38 @@ public class __<T> {
             return absent ? "Optional.absent()" : "Optional.of(" + arg + ")";
         }
     }
+    
+    // ######################################################################
+    private static class FileReader {
+
+	public static <T> List<T> fileRead(String path, java.util.function.Function<String, T> operationOnEachLine) {
+		List<T> returnList = new ArrayList<T>();
+		BufferedReader in;
+		try {
+			in = new BufferedReader(new java.io.FileReader(new File(path)));
+			for (String currentLine = in.readLine(); currentLine != null; currentLine = in.readLine()) {
+				returnList.add(operationOnEachLine.apply(currentLine));
+			}
+			in.close();
+		} catch (IOException e) {
+			System.err.println("can't find file!");
+			return returnList;
+		}
+		return returnList;
+	}
+
+	public static List<String> fileRead(String path) {
+		return fileRead(path, (p) -> (p));
+	}
+}
+    
+    private static class Pluck {
+	public static <T, K> List<K> pluck(List<T> elements, Function<T, K> pluckMethod) {
+            List<K> returnValues = new ArrayList<>();
+            for (T element : elements) {
+                returnValues.add(pluckMethod.apply(element));
+            }
+            return returnValues;
+	}
+}
 }

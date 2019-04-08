@@ -2,14 +2,16 @@ package rgmatute.lodash.test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import rgmatute.lodash.java.__;
 
 /**
  *
  * @author Matute
  */
+@SuppressWarnings("unchecked")
 public class Test {
-
+    
     public static void main(String[] args) {
 
         ArrayList<String> lista = new ArrayList<>();
@@ -85,5 +87,26 @@ public class Test {
         System.out.println(__.isEqual("r", "r"));
         System.out.println(__.isEqual("r", 1902));
         // ###############################################################
+        List l1 = __.list("A","B","C");
+        List l2 = __.list("D");
+        l1 = __.merge(l1, l2,l1);
+        __.forEach(l1,(item)->{
+            System.out.println(item);
+        });
+        
+        __.each(__.fileRead("C:\\Users\\Matute\\Downloads\\AVISO_31032019.txt"),(item)->{
+            __.println(item);
+        });
+        
+        __.println(__.pluck(l1, (item)->{return (item == "C");}));
+        
+        __.println(__.pluck(list, (item)->{return (item == "rgmatute91@gmail.com");}));
+        
+        System.out.println(__.findKey(list, (o)->{ return (o == "rgmatute91@gmail.com"); }));
+        
+        __.println(__.reject(__.list("A","B","C","A","Z"), (item)->{return (!__.isVocal(item));}));
+        __.println(__.object(__.list("moe", "larry", "curly"), __.list("30", "40", "50")));
+        __.object(__.list("moe", "larry", "curly"), __.list("30", "40", "50"));
+            
     }
 }
